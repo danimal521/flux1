@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seismic2
+spec:
+  selector:
+    matchLabels:
+      app: seismic
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: seismic
+    spec:
+      containers:     
+      - name: seismic
+        image: danimalcontainers.azurecr.io/flask:8
+        ports:
+        - containerPort: 5000
+        env:
+        - name: webhook
+          value: https://stackoverflow.com/questions
+        - name: threshold
+          value: 3000
+        - name: PYTHONUNBUFFERED
+          value: "1"
